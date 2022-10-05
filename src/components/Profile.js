@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useContext } from 'react';
+import noteContext from '../context/notes/noteContext'
+
 import {
     MDBCol,
     MDBContainer,
@@ -17,7 +20,19 @@ import {
     MDBListGroupItem
   } from 'mdb-react-ui-kit';
 
+
+
 function Profile() {
+ var id
+ 
+  const context=useContext(noteContext);
+  const {MentorProfile,obj}=context;
+
+  useEffect(() => {
+ id=MentorProfile("633c76f33028a5ea53aa31c4");
+    console.log("profile",id);
+  }, [])
+  
   return (
     <div>
            <section style={{ backgroundColor: '#eee' }}>

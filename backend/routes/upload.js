@@ -48,11 +48,24 @@ router.get('/getmentorsprograms', fetchuser,async(req, res) => {
    res.json(programs);
   });
 
+
   //get mentor
-  router.get('/getmentor',async(req, res) => {
-    const programs=await Mentor.find({_id:req.body.id});
-   res.json(programs);
-  });
+   router.get('/profile/mentor/:id', async (req, res) => {
+        try {
+
+            
+            let mentor=await Mentor.findById(req.params.id).select("-password");
+            if(!mentor)
+            {
+                res.status(498).send("Mentor doesn't exist");
+            }
+            // console.log("backend",mentor)
+           res.json(mentor);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    })
 
 
 
