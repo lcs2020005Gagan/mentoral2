@@ -41,7 +41,7 @@ function ArticlesItem(props) {
   
   return (
     
-      <Card sx={{ maxWidth: 400 }} className="align-items-center my-3 justify-content-center">
+      <Card sx={{ maxWidth: 400,minWidth: '35%' }} className="align-items-center my-3 justify-content-center">
 <CardHeader
           avatar={
               // <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

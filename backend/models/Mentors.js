@@ -15,18 +15,48 @@ const mentorsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
- 
+  publishedPrograms: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'programs',
+  }],
+  publishedArticles: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'articles',
+  }],
+  twitter:{
+    type:String,
+    default:"--"
+  },
+  github:{
+    type:String,
+    default:"--"
+
+  },
+  instagram:{
+    type:String,
+    default:"--"
+
+  },
+  facebook:{
+    type:String,
+    default:"--"
+  },
   about: {
     type: String,
   },
   skills: {
     type: Array,  
+    default:[]
   },
   profileImg: {
     type: String,
+    default:"https://thumbs.dreamstime.com/z/man-profile-cartoon-smiling-round-icon-vector-illustration-graphic-design-135443422.jpg"
   },
-  followers: { type: mongoose.Schema.Types.ObjectId,
-    ref: "users", },
+  followers:[ { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users", 
+  }],
+
   ratingsSum: {
     type: Number,
     default:0,
@@ -39,26 +69,7 @@ const mentorsSchema = new mongoose.Schema({
     type: Number,
     default:0,
   },
-  publishedPrograms: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "publishedPrograms",
-  },
-  publishedArticles: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "publishedArticles",
-  },
-  twitter:{
-    type:String
-  },
-  github:{
-    type:String
-  },
-  instagram:{
-    type:String
-  },
-  facebook:{
-    type:String
-  },
+ 
 
 });
 const mentors = mongoose.model("mentors", mentorsSchema);

@@ -22,10 +22,7 @@ router.post('/createuser',
 [body('name','Enter a valid name').isLength({min:1}),
   body('email','Enter a valid email').isEmail(),
   body('password','password must be atleast 5 characters').isLength({ min: 5 }),
-  body('followedMentors'),
-  body('enrolledPrograms'),
-  body('profileImg'),
-  body('savedForLater'),
+ 
 ],
  async (req, res) => {
       success=false;
@@ -50,14 +47,7 @@ console.log(secpassword);
             name:req.body.name,
           email: req.body.email,
           password: secpassword,
-          profileImg:req.body.profileImg,
-          savedForLater:req.body.savedForLater,
-          followedMentors:req.body.followedMentors,
-          enrolledPrograms:req.body.enrolledPrograms,
-          followedMentors:req.body.followedMentors,
-          savedForLater:req.body.savedForLater,
-
-        })
+         })
         console.log("user ",user)
         // console.log(user);
         var authtoken=await jwt.sign({id:user.id},secretKey)
@@ -337,6 +327,28 @@ router.get('/enrolledprograms',fetchuser,async (req,res)=>{
     })
   
     
+    //get recommended mentors
+    router.get('/recmentors',async (req,res)=>{
+      const articles= Mentor.find().sort({ratings:-1}).limit(10)
+       .exec()
+       .then(p=>{
+           res.status(200).json(p)
+       })
+       .catch(error=>console.log(error));
+     })
+
+
+     //get all mentors
+     router.get('/allmentors',async (req,res)=>{
+      const articles= Mentor.find()
+       .exec()
+       .then(p=>{
+           res.status(200).json(p)
+       })
+       .catch(error=>console.log(error));
+     })
+      
+      
   
 
   

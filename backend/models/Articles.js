@@ -6,7 +6,8 @@ const articlesSchema = new mongoose.Schema({
     required:true
  },
  image:{
-    type:String
+    type:String,
+    default:" https://temp.compsci88.com/cover/Dandadan.jpg"
  },
  description:{
     type:String
@@ -18,8 +19,13 @@ const articlesSchema = new mongoose.Schema({
     type:Date,
     default:new Date(),
  } ,
+ likes:{
+   type:Number,
+   default:0,
+ },
  tags:{
     type:Array,
+    default:["No tags"]
  },
 
 

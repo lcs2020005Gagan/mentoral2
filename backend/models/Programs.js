@@ -6,7 +6,8 @@ const programsSchema = new mongoose.Schema({
     required:true
  },
  image:{
-    type:String
+    type:String,
+    default:"https://temp.compsci88.com/cover/Shingeki-No-Kyojin.jpg"
  },
  description:{
 type:String
