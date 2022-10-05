@@ -12,9 +12,10 @@ function Navbar() {
     navigate('/');
 
   }
+  
   return (
     <div className=" justify-content-center align-items-center text-items-center">
-<nav className="rounded ms-auto me-auto navbar fixed-top navbar-expand-sm navbar-light  " style={{"background": 'rgb(255, 255, 255, 0.3)', "backdropFilter": 'blur(5px)', "width":"96%","marginTop":"1rem"}} >
+<nav className=" ms-auto me-auto pe-3 navbar fixed-top navbar-expand-sm navbar-light  " style={{"background": 'rgb(255, 255, 255, 0.6)', "backdropFilter": 'blur(5px)', "width":"96%","marginTop":"1rem", "borderRadius":"12px"}} >
         <div className="container-fluid">
     <a className="navbar-brand" href="#">
     {/* <img src={require('./navbar.png')} style={{"width":"50px", "height":"40px"}}  alt="" className="d-inline-block align-text-top"/> */}
@@ -52,7 +53,10 @@ function Navbar() {
             <li><Link className="dropdown-item" to="#" onClick={handleSignOut}>Sign Out</Link></li>
 
           </ul>
-        </li>:<Link to="/loginu"><i class="fa-solid fa-right-to-bracket"></i></Link> }
+        </li>:
+          <li className="nav-item">
+          <Link className="nav-link" to="/loginu" style={{"color":"blue"}}>SignIn</Link>
+        </li>}
        
       
       </ul>

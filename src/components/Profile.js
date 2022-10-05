@@ -1,6 +1,13 @@
-import React, { useEffect } from 'react'
-import { useContext } from 'react';
+import React, { useEffect,useContext, useState } from 'react'
 import noteContext from '../context/notes/noteContext'
+import Rating from '@mui/material/rating'
+import Typography from '@material-ui/core/typography'
+import WithinProfile from './WithinProfile';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Avatar from '@material-ui/core/avatar'
+
 
 import {
     MDBCol,
@@ -18,81 +25,106 @@ import {
     MDBIcon,
     MDBListGroup,
     MDBListGroupItem
-  } from 'mdb-react-ui-kit';
+  } from 'mdb-react-ui-kit'
+import DisplayAv from '../DisplayAv';
 
 
 
 function Profile() {
- var id
- 
+  let rand=0
   const context=useContext(noteContext);
-  const {MentorProfile,obj}=context;
-
+  const {userProfile,getUserProfile}=context;
+  const {name,email,password,profileImg,followedMentors,enrolledPrograms,savedForLater}=userProfile
+  
   useEffect(() => {
- id=MentorProfile("633c76f33028a5ea53aa31c4");
-    console.log("profile",id);
-  }, [])
+    if(localStorage.getItem('who')==="u")
+    getUserProfile();
+  }, [userProfile])
   
   return (
     <div>
-           <section style={{ backgroundColor: '#eee' }}>
+      <div className="p-5 bg-image " style={{backgroundImage:`url(${profileImg})`,backgroundSize:'100% 100%',filter:'brightness(85%)', boxShadow: 'inset 0 0 12rem black',height: '75vh', maxWidth:'100%',backgroundRepeat: 'no-repeat'}}></div>
+
+           <section className="ms-auto me-auto "style={{marginTop: '-7rem', background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,maxWidth:'90%', borderRadius:'12px'}} >
       <MDBContainer className="py-5">
         <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <a href='#'>Home</a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem>
-                <a href="#">User</a>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
-            </MDBBreadcrumb>
-          </MDBCol>
-        </MDBRow>
-
-        <MDBRow>
           <MDBCol lg="4">
-            <MDBCard className="mb-4">
+            <MDBCard className="mb-4" style={{ background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,borderRadius:'12px'}}>
               <MDBCardBody className="text-center">
-                <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: '150px' }}
-                  fluid />
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
+              <MDBCardImage
+                      style={{ width: '8rem', height:'8rem', borderRadius: '12px' }}
+                      src={profileImg}
+                      fluid />
+                <p className="text-muted mb-1"><h1>{name}</h1></p>
+                {/* {localStorage.getItem('who'==="m")&&<p className="text-muted mb-4">{about}</p>} */}
+                <div className="d-flex justify-content-start align-items-center rounded-3 p-2 mb-3"
+                      style={{ backgroundColor: '#efefef' ,borderRadius:'12px'}}>
+                      <div className='px-3 ms-auto me-auto'>
+                        <p className=" small text-muted mb-1">Saved Articles</p>
+                        <hr />
+                        <p className="mb-0">{savedForLater.length}</p>
+                      </div>
+                      <div className="px-3 ms-auto me-auto">
+                        <p className="small text-muted mb-1">Enrolled Programs</p>
+                        <hr />
+                        <p className="mb-0 ms-auto me-auto">{enrolledPrograms.length}</p>
+                      </div>
+                      <div className="px-3 ms-auto me-auto">
+                        <p className="small text-muted mb-1 ms-auto me-auto">Followed Mentors</p>
+                        <hr />
+                        <p className="mb-0">{followedMentors.length}</p>
+                      </div>
+                      {/* <div className='ms-auto me-auto'>
+                        <p className="small text-muted mb-1 ">Rating</p>
+                        <p className="mb-0">{ratings}</p>
+                      </div> */}
+                    </div>
+
+                    {localStorage.getItem('who')!=="u"&&<Typography className="text-muted mb-1" component="legend">Ratings</Typography>
+                }
+ {localStorage.getItem('who')!=="u"&&<Rating name="read-only" value={5} readOnly />}
+ {localStorage.getItem('who')!=="u"&&<hr/>  }
+{localStorage.getItem('who')!=="u"&&
                 <div className="d-flex justify-content-center mb-2">
                   <MDBBtn>Follow</MDBBtn>
                   <MDBBtn outline className="ms-1">Message</MDBBtn>
                 </div>
-              </MDBCardBody>
+}
+        
+
+                </MDBCardBody>
             </MDBCard>
 
-            <MDBCard className="mb-4 mb-lg-0">
+            <MDBCard className="mb-4 mb-lg-0" style={{"display":localStorage.getItem('who')==="u"?"none":"block"}}>
+            
               <MDBCardBody className="p-0">
-                <MDBListGroup flush className="rounded-3">
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>https://mdbootstrap.com</MDBCardText>
-                  </MDBListGroupItem>
+                
+             <MDBListGroup flush className="rounded-3" style={{ background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,borderRadius:'12px'}}>
+             <a href='#' style={{"textDecoration":"none"}}>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                  </a>
+                  <a href='#' style={{"textDecoration":"none"}}>
+                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
                     <MDBCardText>@mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
+                  </a>
+                  <a href='#' style={{"textDecoration":"none"}}>
+
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
+                  </a>
+                  <a href='#' style={{"textDecoration":"none"}}>
+                    <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
                     <MDBCardText>mdbootstrap</MDBCardText>
                   </MDBListGroupItem>
+                  </a>
                 </MDBListGroup>
               </MDBCardBody>
             </MDBCard>
@@ -102,10 +134,10 @@ function Profile() {
               <MDBCardBody>
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Full Name</MDBCardText>
+                    <MDBCardText>Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Johnatan Smith</MDBCardText>
+                    <MDBCardText className="text-muted">{name}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -114,28 +146,19 @@ function Profile() {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">example@example.com</MDBCardText>
+                    <MDBCardText className="text-muted">{email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
-                <MDBRow>
+                <MDBRow style={{"display":localStorage.getItem('who')==="u"?"none":"block"}}>
                   <MDBCol sm="3">
-                    <MDBCardText>Phone</MDBCardText>
+                    <MDBCardText>Skills</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(097) 234-5678</MDBCardText>
+                    <MDBCardText className="text-muted">skills</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
+                {/* <hr /> */}
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>Address</MDBCardText>
@@ -146,72 +169,46 @@ function Profile() {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
+          
+                <div className='align-items-center justify-content-center '>
+                  <h1 className="text-muted text-align-center">Enrolled Programs</h1>
+                <div className="cont px-3 align-items-center justify-content-center ">
 
-            <MDBRow>
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+<div className="row">
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+     {userProfile.enrolledPrograms.map((element) => {
+      // console.log(element.author.name);
+         return <div className="col-md-6" key={rand++}>
+            <WithinProfile {...element}/>
+         </div>
+     })}
+ </div>
+</div>
+<div className="cont px-3 align-items-center justify-content-center ">
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
+<div className="row">
+<h1 className="text-muted text-align-center">Followed Mentors</h1>
 
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+     {followedMentors&&userProfile.followedMentors.map((element) => {
+      // console.log(element.name)
+         return <div className="col-md-2 my-3" key={rand++}>
+            <DisplayAv name={element.name} img={element.profileImg}/>
+         </div>
+     })}
+     {
+      !followedMentors&&<h1 className="text-muted text-align-center">No followed mentors</h1>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+     }
+ </div>
+</div>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
+
+                </div>
+                 
           </MDBCol>
         </MDBRow>
       </MDBContainer>

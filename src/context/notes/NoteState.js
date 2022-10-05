@@ -10,6 +10,7 @@ const NoteState =(props)=>{
         const initialAllPrograms=[]
         const recMentorsInitial=[]
         const allMentorsInitial=[]
+        const userProfileInitial=[]
         
 
         const initialobj=""
@@ -17,26 +18,35 @@ const NoteState =(props)=>{
   const [allArticles, setAllArticles] = useState(initialAllArticles)
   const [allMentors, setAllMentors] = useState(allMentorsInitial)
   const [recMentors, setRecMentors] = useState(recMentorsInitial)
+  const [userProfile, setUserProfile] = useState({
+    name:"",
+    email:"",
+    password:"",
+    profileImg:"",
+    followedMentors:[],
+    enrolledPrograms:[],
+    savedForLater:[],
+  })
 
-//   const [profileMentor, setProfileMentor] = useState({
-//     name: "",
-//       email: "",    
+  const [profileMentor, setProfileMentor] = useState({
+    name: "",
+      email: "",    
    
-//       publishedPrograms: [],
-//       publishedArticles: [],
-//       twitter:"",
-//       github:"",
-//       instagram:"",
-//       facebook:"",
-//       about: "",
-//       skills: [],
-//       profileImg: "",
-//       followers:[],
+      publishedPrograms: [],
+      publishedArticles: [],
+      twitter:"",
+      github:"",
+      instagram:"",
+      facebook:"",
+      about: "",
+      skills: [],
+      profileImg: "",
+      followers:[],
     
-//       ratingsSum:0,
-//       totalVoted:0,
-//       ratings:0,
-//   })
+      ratingsSum:0,
+      totalVoted:0,
+      ratings:0,
+  })
   const [obj,setobj]=useState(initialobj)
   const [idi,setidi]=useState("hello");
   const [allPrograms, setAllPrograms] = useState(initialAllPrograms)
@@ -70,6 +80,35 @@ const getAllPrograms=async ()=>{
 setAllPrograms(json);
 
 }
+
+
+      // get user for profile
+const getUserProfile=async ()=>{
+  //  console.log("inside getnotes");
+ 
+    const response=await fetch(`${host}/api/auth/getuser`,{
+        method: 'POST',
+        headers: {
+          "auth-token": localStorage.getItem('token')
+        },
+      });
+
+      const json=await response.json();
+      // console.log(json[0].name)
+      setUserProfile({
+        name:json[0].name,
+        email:json[0].email,
+        password:json[0].password,
+        profileImg:json[0].profileImg,
+        followedMentors:json[0].followedMentors,
+        enrolledPrograms:json[0].enrolledPrograms,
+        savedForLater:json[0].savedForLater,
+      });
+      // setUserProfile({...userProfile,...json});
+      // console.log("json1",jsonstr)
+      // console.log("json",userProfile);
+
+    }
 
 
 
@@ -122,7 +161,7 @@ return json;
 
 
     return(
-        <NoteContext.Provider value={{allArticles,allPrograms,getAllArticles,getAllPrograms,MentorProfile,obj,allMentors,getAllMentors,getRecMentors,recMentors}}>
+        <NoteContext.Provider value={{allArticles,allPrograms,getAllArticles,getAllPrograms,MentorProfile,obj,allMentors,userProfile,getUserProfile,getAllMentors,getRecMentors,recMentors}}>
             {props.children}
         </NoteContext.Provider>
     )

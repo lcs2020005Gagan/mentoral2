@@ -67,6 +67,33 @@ res.send("hello");
 );
 
 
+//getuser
+router.post('/getuser',fetchuser,
+  async (req, res) => {
+    await User.find({_id:req.id})
+  .select("-password")
+  .populate(
+    {
+      path:'enrolledPrograms',
+      populate:{
+        path:'author'
+        }
+    }
+  )
+  .populate({
+    path:'followedMentors'
+  })
+  .populate({
+    path:'savedForLater'
+  })
+   
+ .exec()
+  .then(p=>{
+      res.status(200).json(p)
+  })
+  .catch(error=>console.log(error));
+  });
+
 
 //login user
 router.post('/loginuser',
@@ -214,24 +241,25 @@ router.post('/loginmentor',
 )
 
 //getmentor
-router.get('/getmentor',fetchmentor,async (req,res)=>{
-  // const id=req.body._id
-  console.log(req.id);
-  // await Mentor.find({_id:id})
-  //  .select("-password")
-  //  .populate(
-  //    {
-  //      path:'publishedArticles',
-  //    }
-  //  )
-  //  .exec()
-  //  .then(p=>{
-  //      res.status(200).json(p)
-  //  })
-  //  .catch(error=>console.log(error));
-  const mentor=await Mentor.findById(req.id)
-  console.log(mentor.publishedArticles);
- })
+router.post('/getmentor',fetchuser,
+  async (req, res) => {
+    await Mentor.find({_id:req.id})
+  .select("-password")
+  .populate(
+    {
+      path:'publishedPrograms',
+    }
+  )
+    .populate({
+      path:'publishedArticles'
+    })
+ .exec()
+  .then(p=>{
+      res.status(200).json(p)
+  })
+  .catch(error=>console.log(error));
+    
+  });
  
  
 

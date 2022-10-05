@@ -48,6 +48,7 @@ function Login() {
           {
             //redirect
             localStorage.setItem('token',json.authtoken)
+            localStorage.setItem('who',"m")
   
             navigate('/');
             

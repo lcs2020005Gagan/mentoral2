@@ -26,8 +26,8 @@ function RecMentors(props) {
         <div className="card-body text-center">
           <h4 className="card-title font-weight-bold">{name}</h4>
           <hr/>
-          <div className="d-flex justify-content-start align-items-center rounded-3 p-2 mb-2"
-                      style={{ backgroundColor: '#efefef' }}>
+          <div className="d-flex justify-content-start align-items-center rounded-3 p-2 mb-3"
+                      style={{ backgroundColor: '#efefef',borderRadius:'12px' }}>
                       <div className='ms-auto me-auto'>
                         <p className=" small text-muted mb-1">Articles</p>
                         <p className="mb-0">{publishedArticles.length}</p>
@@ -45,7 +45,7 @@ function RecMentors(props) {
                         <p className="mb-0">{ratings}</p>
                       </div> */}
                     </div>
-                    <Typography component="legend">Ratings</Typography>
+                    <Typography component="legend" className="text-muted mb-1">Ratings</Typography>
 <Rating name="read-only" value={ratings} readOnly />
         </div>
         <Button className="ms-auto me-auto mb-2 " variant="outlined">Follow</Button>
