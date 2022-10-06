@@ -27,6 +27,7 @@ import {
     MDBListGroupItem
   } from 'mdb-react-ui-kit'
 import DisplayAv from '../DisplayAv';
+import ProfileArticles from './ProfileArticles';
 
 
 
@@ -43,13 +44,13 @@ function Profile() {
   
   return (
     <div>
-      <div className="p-5 bg-image " style={{backgroundImage:`url(${profileImg})`,backgroundSize:'100% 100%',filter:'brightness(85%)', boxShadow: 'inset 0 0 12rem black',height: '75vh', maxWidth:'100%',backgroundRepeat: 'no-repeat'}}></div>
+      <div className="p-5 bg-image " style={{backgroundImage:`url(${profileImg})`,backgroundSize:'100% 100%',filter:'brightness(85%)', boxShadow: 'inset 0 0 22rem black',height: '75vh', maxWidth:'100%',backgroundRepeat: 'no-repeat'}}></div>
 
            <section className="ms-auto me-auto "style={{marginTop: '-7rem', background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,maxWidth:'90%', borderRadius:'12px'}} >
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
-            <MDBCard className="mb-4" style={{ background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,borderRadius:'12px'}}>
+            <MDBCard className="mb-4 bg-transparent" style={{ borderRadius:'12px'}}>
               <MDBCardBody className="text-center">
               <MDBCardImage
                       style={{ width: '8rem', height:'8rem', borderRadius: '12px' }}
@@ -99,7 +100,7 @@ function Profile() {
             
               <MDBCardBody className="p-0">
                 
-             <MDBListGroup flush className="rounded-3" style={{ background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,borderRadius:'12px'}}>
+             <MDBListGroup flush  style={{ background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)' ,borderRadius:'12px'}}>
              <a href='#' style={{"textDecoration":"none"}}>
                   <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
                     <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
@@ -130,8 +131,8 @@ function Profile() {
             </MDBCard>
           </MDBCol>
           <MDBCol lg="8">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
+            <MDBCard className="mb-4 bg-transparent"  style={{"borderRadius":"12px"}}>
+              <MDBCardBody >
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>Name</MDBCardText>
@@ -149,7 +150,7 @@ function Profile() {
                     <MDBCardText className="text-muted">{email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-                <hr />
+                {/* <hr />
                 <MDBRow style={{"display":localStorage.getItem('who')==="u"?"none":"block"}}>
                   <MDBCol sm="3">
                     <MDBCardText>Skills</MDBCardText>
@@ -157,57 +158,83 @@ function Profile() {
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">skills</MDBCardText>
                   </MDBCol>
-                </MDBRow>
+                </MDBRow> */}
                 {/* <hr /> */}
-                <MDBRow>
+                {/* <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>Address</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
                   </MDBCol>
-                </MDBRow>
+                </MDBRow> */}
               </MDBCardBody>
             </MDBCard>
           
-                <div className='align-items-center justify-content-center '>
-                  <h1 className="text-muted text-align-center">Enrolled Programs</h1>
-                <div className="cont px-3 align-items-center justify-content-center ">
+                <div className='align-items-center justify-content-centerbg-transparent'>
+                <div className="cont px-3 align-items-center justify-content-center bg-transparent">
 
 
 <div className="row">
+                  <h1 className="text-muted text-align-center ms-auto bg-transparent">Enrolled Programs</h1>
 
-     {userProfile.enrolledPrograms.map((element) => {
+     {userProfile.enrolledPrograms.slice(0,2).map((element) => {
       // console.log(element.author.name);
-         return <div className="col-md-6" key={rand++}>
+         return <div className="col-md-6 bg-transparent" key={rand++}>
             <WithinProfile {...element}/>
          </div>
      })}
+
  </div>
-</div>
+     <button type="button" class="btn ms-auto btn-dark me-auto my-3" style={{"maxWidth":"6rem"}}>Show All</button>
+
+ </div>
 <div className="cont px-3 align-items-center justify-content-center ">
 
 
 <div className="row">
-<h1 className="text-muted text-align-center">Followed Mentors</h1>
 
-     {followedMentors&&userProfile.followedMentors.map((element) => {
+<h1 className="text-muted text-align-center">Followed Mentors</h1>
+     {followedMentors.length>=1&&userProfile.followedMentors.slice(0,6).map((element) => {
       // console.log(element.name)
          return <div className="col-md-2 my-3" key={rand++}>
             <DisplayAv name={element.name} img={element.profileImg}/>
          </div>
      })}
-     {
-      !followedMentors&&<h1 className="text-muted text-align-center">No followed mentors</h1>
 
-     }
+     {
+       followedMentors.length===0&&<h1 className="text-muted text-align-center">No followed mentors</h1>
+       
+      }
  </div>
+ {followedMentors.length>6&&<button type="button" class="btn align-items-center justify-content-center ms-auto btn-dark me-auto my-3" style={{"maxWidth":"6rem"}}>Show All</button>}
+</div>
+<div className="cont px-3 align-items-center justify-content-center ">
+
+
+<div className="row">
+
+<h1 className="text-muted text-align-center">Saved Articles</h1>
+     {followedMentors.length>=1&&userProfile.savedForLater.slice(0,3).map((element) => {
+      // console.log(element.name)
+         return <div className="my-3" key={rand++}>
+          <ProfileArticles {...element}/>
+         </div>
+     })}
+
+     </div>
+ 
+      {savedForLater.length>6&&<button type="button" class="btn align-items-center justify-content-center ms-auto btn-dark me-auto my-3" style={{"maxWidth":"6rem"}}>Show All</button>}
+      {
+        savedForLater.length===0&&<p>You have not saved any articles</p>
+      }
 </div>
 
 
 
 
                 </div>
+                
                  
           </MDBCol>
         </MDBRow>

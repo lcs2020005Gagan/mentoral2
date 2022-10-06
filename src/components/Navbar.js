@@ -50,7 +50,7 @@ function Navbar() {
             <li><Link className="dropdown-item" to="#">Liked Articles</Link></li>
             <li><Link className="dropdown-item" to="#">Followed Mentors</Link></li>
             <li><hr className="dropdown-divider"/></li>
-            <li><Link className="dropdown-item" to="#" onClick={handleSignOut}>Sign Out</Link></li>
+            <li><Link className="dropdown-item" to="/" onClick={handleSignOut}>Sign Out</Link></li>
 
           </ul>
         </li>:

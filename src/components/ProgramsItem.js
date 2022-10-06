@@ -23,10 +23,10 @@ function ProgramsItem(props) {
             // <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             //   R
             // </Avatar>
-            <a href="#">
- <Avatar
+            <a target="_blank" href={`/profile/mentor/${author._id}`}>
+            <Avatar
   alt="Remy Sharp"
-  src={image}
+  src={author.profileImg}
   sx={{ width: 40, height: 40 }}
 />
             </a>

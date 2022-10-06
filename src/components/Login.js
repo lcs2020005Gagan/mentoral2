@@ -104,7 +104,7 @@ function Login() {
     };
   return (
             <div>
-      <div className="p-5 bg-image " style={{backgroundImage: 'url(https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg)', height: '380px', maxWidth:'100%',backgroundRepeat: 'no-repeat'}}></div>
+    <div className="p-5 bg-image " style={{backgroundImage:`url("https://media.istockphoto.com/photos/beautiful-sunrise-over-the-sea-picture-id610041376?k=20&m=610041376&s=612x612&w=0&h=JoEPWYoq1-FN5ANIQHNNdI2XrRDYnPCUWuLOHMrgLnE=")`,backgroundSize:'100% 100%',filter:'brightness(85%)', boxShadow: 'inset 0 0 15rem black',height: '75vh', maxWidth:'100%',backgroundRepeat: 'no-repeat'}}></div>
 
       <MDBCard className='mx-5 mb-5 shadow-5' style={{marginTop: '-100px', background: 'hsla(0, 0%, 100%, 0.6)', backdropFilter: 'blur(30px)'}}>
         {/* <MDBCardBody className='p-5 text-center'> */}

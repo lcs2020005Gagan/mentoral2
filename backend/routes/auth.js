@@ -241,9 +241,9 @@ router.post('/loginmentor',
 )
 
 //getmentor
-router.post('/getmentor',fetchuser,
+router.post('/profile/mentor/:id',
   async (req, res) => {
-    await Mentor.find({_id:req.id})
+    await Mentor.findById(req.params.id)
   .select("-password")
   .populate(
     {
