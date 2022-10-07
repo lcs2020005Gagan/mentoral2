@@ -13,6 +13,7 @@ const NoteState =(props)=>{
         const recMentorsInitial=[]
         const allMentorsInitial=[]
         const userProfileInitial=[]
+        const userProfileSkelInitial=[]
         
 
         const initialobj=""
@@ -21,6 +22,15 @@ const NoteState =(props)=>{
   const [allMentors, setAllMentors] = useState(allMentorsInitial)
   const [recMentors, setRecMentors] = useState(recMentorsInitial)
   const [userProfile, setUserProfile] = useState({
+    name:"",
+    email:"",
+    password:"",
+    profileImg:"",
+    followedMentors:[],
+    enrolledPrograms:[],
+    savedForLater:[],
+  })
+  const [userProfileSkel, setUserProfileSkel] = useState({
     name:"",
     email:"",
     password:"",
@@ -83,6 +93,70 @@ setAllPrograms(json);
 
 }
 
+//update user
+ //update user
+ const updateUser=async (userobj)=>
+ {
+    
+     // console.log("inside editnote");
+    //  console.log("inside",userobj);
+     const response=await fetch(`${host}/api/auth/updateuser`,{
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           "auth-token": localStorage.getItem('token')
+         },
+         body: JSON.stringify(userobj)
+       });
+     const json=response.json();
+     setUserProfile({
+      name:json[0].name,
+      email:json[0].email,
+      password:json[0].password,
+      profileImg:json[0].profileImg,
+      followedMentors:json[0].followedMentors,
+      enrolledPrograms:json[0].enrolledPrograms,
+      savedForLater:json[0].savedForLater,
+    });    //  console.log(json);
+ 
+     // let newNote=JSON.parse(JSON.stringify(notes));
+     // for(let index=0;index<newNote.length;index++)
+     // {
+     //     const element=newNote[index];
+     //     if(element._id===id)
+     //     {
+     //         newNote[index].title=title;
+     //         newNote[index].description=description;
+     //         newNote[index].tag=tag;
+     //         break;
+     //     }
+     // }
+     // setNotes(newNote);
+ 
+ }
+
+
+ //follow mentor
+ const followMentor=async (mentor_id)=>
+ {
+    
+     // console.log("inside editnote");
+    //  console.log("inside",mentor_id);
+     const response=await fetch(`${host}/api/auth/followmentor`,{
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           "auth-token": localStorage.getItem('token')
+         },
+         body: mentor_id
+       });
+     const json=response.json();
+     //  console.log(json);
+     setUserProfile({...userProfile,followedMentors:json.followedMentors})
+ 
+ }
+ 
+
 
       // get user for profile
 const getUserProfile=async ()=>{
@@ -98,6 +172,35 @@ const getUserProfile=async ()=>{
       const json=await response.json();
       // console.log(json[0].name)
       setUserProfile({
+        name:json[0].name,
+        email:json[0].email,
+        password:json[0].password,
+        profileImg:json[0].profileImg,
+        followedMentors:json[0].followedMentors,
+        enrolledPrograms:json[0].enrolledPrograms,
+        savedForLater:json[0].savedForLater,
+      });
+      // setUserProfile({...userProfile,...json});
+      // console.log("json1",jsonstr)
+      // console.log("json",userProfile);
+
+    }
+
+    //get user profile skel
+    // get user for profile
+const getUserProfileSkel=async ()=>{
+  //  console.log("inside getnotes");
+ 
+    const response=await fetch(`${host}/api/auth/getuserskel`,{
+        method: 'POST',
+        headers: {
+          "auth-token": localStorage.getItem('token')
+        },
+      });
+
+      const json=await response.json();
+      // console.log(json[0].name)
+      setUserProfileSkel({
         name:json[0].name,
         email:json[0].email,
         password:json[0].password,
@@ -195,7 +298,7 @@ return json;
 
 
     return(
-        <NoteContext.Provider value={{allArticles,allPrograms,getAllArticles,getAllPrograms,MentorProfile,obj,allMentors,userProfile,getUserProfile,getAllMentors,getRecMentors,recMentors,profileMentor,getMentorProfile}}>
+        <NoteContext.Provider value={{allArticles,userProfileSkel,getUserProfileSkel,updateUser,allPrograms,getAllArticles,getAllPrograms,MentorProfile,obj,allMentors,userProfile,getUserProfile,getAllMentors,getRecMentors,recMentors,profileMentor,getMentorProfile}}>
             {props.children}
         </NoteContext.Provider>
     )

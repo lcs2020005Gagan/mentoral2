@@ -81,6 +81,7 @@ function Login() {
             {
               //redirect
               localStorage.setItem('token',json.authtoken)
+              localStorage.setItem('who',"u")
     
               navigate('/');
               
@@ -159,7 +160,9 @@ function Login() {
         <a href="!#">Forgot password?</a>
       </div>
 
-      <MDBBtn className="mb-4 w-100" onClick={handlesubmit}>Sign in</MDBBtn>
+      {/* <MDBBtn className="mb-4 w-100" onClick={handlesubmit}>Sign in</MDBBtn> */}
+      <button class="btn mb-4 w-100 ms-auto me-auto btn-primary onClick={submitup}" type="button" onClick={handlesubmit}>Sign Up</button>
+
       <p className="text-center">Not a member? <a href="#!" onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>Register</a></p>
       <p className="text-center">Are you a mentor? <a href="#!">Sign in here</a></p>
 
@@ -200,7 +203,9 @@ function Login() {
         <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
       </div>
 
-      <MDBBtn className="mb-4 w-100" onClick={submitup}>Sign up</MDBBtn>
+      {/* <MDBBtn className="mb-4 w-100" onClick={submitup}>Sign up</MDBBtn> */}
+      <button class="btn mb-4 w-100 ms-auto me-auto btn-primary onClick={submitup}" type="button">Sign Up</button>
+
 
     </MDBTabsPane>
 

@@ -78,21 +78,38 @@ router.post('/getuser',fetchuser,
       populate:{
         path:'author'
         }
-    }
+    } 
   )
   .populate({
     path:'followedMentors'
   })
   .populate({
-    path:'savedForLater'
+    path:'savedForLater',
+    populate:{
+      path:'author'
+      }
   })
-   
- .exec()
+  .exec()
   .then(p=>{
       res.status(200).json(p)
   })
   .catch(error=>console.log(error));
   });
+
+  
+
+
+  //getuser
+router.post('/getuserskel',fetchuser,
+async (req, res) => {
+ await User.find({_id:req.id})
+.select("-password")
+.exec()
+.then(p=>{
+    res.status(200).json(p)
+})
+.catch(error=>console.log(error));
+});
 
 
 //login user
@@ -240,6 +257,16 @@ router.post('/loginmentor',
   
 )
 
+//get name and profile image for user
+router.post('/getunapi',fetchuser,
+  async (req, res) => {
+    await User.find({_id:req.id})
+  .select({name:1,profileImg:1})
+  .catch(error=>console.log(error));
+  });
+
+
+
 //getmentor
 router.post('/profile/mentor/:id',
   async (req, res) => {
@@ -304,6 +331,30 @@ router.get('/enrolledprograms',fetchuser,async (req,res)=>{
 })
 
 
+
+   //update saved for later
+   router.post('/updateuser', fetchuser, [
+    body('user'),
+   ], async (req, res) => {
+
+        try {
+          console.log("hello")
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+           
+            const newuser = await User.findByIdAndUpdate(req.id,{$set:req.body},{new:true});
+            res.json(newuser);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send("Internal Server Error");
+        }
+    })
+
+
+   
+
 //enroll for a program
  
  router.post('/enrollforaprogram', fetchuser, [
@@ -325,6 +376,8 @@ router.get('/enrolledprograms',fetchuser,async (req,res)=>{
           res.status(500).send("Internal Server Error");
       }
   })
+
+  
 
   //followmentor
   router.post('/followmentor', fetchuser, [

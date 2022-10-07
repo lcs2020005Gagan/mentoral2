@@ -21,7 +21,7 @@ function Programs() {
 },[allPrograms])
   return (
     <div  >
-      <div className="cont">
+      <div className="cont ms-auto me-auto">
         <ArticleCarousel/>
       </div>
     
@@ -29,15 +29,15 @@ function Programs() {
             <div className="cont px-3 align-items-center justify-content-center ">
 
 
-                <div className="row">
+<div>
 
-                     {allPrograms.map((element) => {
-                         return <div className="col-md-4" key={rand++}>
-                            <ProgramsItem {...element}/>
-                         </div>
-                     })}
-                 </div>
-            </div>
+{allPrograms.map((element) => {
+    return <div className="d-flex md-col-4 justify-content-center" key={rand++} >
+       <ProgramsItem {...element}/>
+    </div>
+})}
+</div>
+</div>
 
 
   </div>

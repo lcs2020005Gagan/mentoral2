@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext,useEffect,useState } from 'react';
+import noteContext from '../context/notes/noteContext'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Rating from '@mui/material/rating'
@@ -6,6 +7,30 @@ import Typography from '@material-ui/core/typography'
 
 
 function AllMentors(props) {
+  const context=useContext(noteContext);
+  const [arr,setArr]=useState([])
+  const {userProfile,getUserProfile,updateUser}=context;
+ 
+   const handleClick=()=>{
+    if(!arr.includes(props._id))
+    {
+      userProfile.followedMentors.push(props._id);
+      updateUser(userProfile);
+    }
+   
+   }
+   useEffect(()=>{
+    //  if(localStorage.getItem('who')!=="u")
+    //  navigate("/login")
+  getUserProfile();  
+  for(let i=0;i<userProfile.followedMentors.length;i++)
+  {
+    arr.push(userProfile.followedMentors[i]._id);
+  }
+  console.log(userProfile);
+  console.log(arr);
+  },[userProfile])
+
 
   const {name,publishedPrograms,publishedArticles,followers,about,profileImg,ratings}=props;
   const img="https://media.istockphoto.com/photos/mountain-landscape-ponta-delgada-island-azores-picture-id944812540?k=20&m=944812540&s=612x612&w=0&h=U3sC5L6ZJY2oHC33eixu4CcB15JsgKl0Wnhtcpf_p40="
@@ -48,8 +73,7 @@ function AllMentors(props) {
                     <Typography component="legend">Ratings</Typography>
 <Rating name="read-only" value={ratings} readOnly />
         </div>
-        <Button className="ms-auto me-auto mb-2 " variant="outlined">Follow</Button>
-      </div>
+        <Button className="ms-auto me-auto mb-2 " variant="contained" disabled={arr.includes(props._id)} onClick={handleClick}style={{color:"white",backgroundColor:arr.includes(props._id)?"grey":"blue"}}>{arr.includes(props._id)?"Following":"Follow"}</Button>      </div>
       
     </section>
   )

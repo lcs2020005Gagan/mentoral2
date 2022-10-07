@@ -1,27 +1,55 @@
-import React from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import Rating from '@mui/material/rating'
 import Typography from '@material-ui/core/typography'
+import noteContext from '../context/notes/noteContext'
+import { Navigate,Link } from 'react-router-dom';
 
 
 function RecMentors(props) {
+  let rand=0
+    const context=useContext(noteContext);
+    const [arr,setArr]=useState([])
+    const {userProfile,getUserProfile,updateUser}=context;
+   
+     const handleClick=()=>{
+      if(!arr.includes(props._id))
+      {
+        userProfile.followedMentors.push(props._id);
+        updateUser(userProfile);
+      }
+     
+     }
+
+    
+        useEffect(()=>{
+  //  if(localStorage.getItem('who')!=="u")
+  //  navigate("/login")
+getUserProfile();  
+for(let i=0;i<userProfile.followedMentors.length;i++)
+{
+  arr.push(userProfile.followedMentors[i]._id);
+}
+// console.log(userProfile);
+// console.log(arr);
+},[userProfile])
 
   const {name,publishedPrograms,publishedArticles,followers,about,profileImg,ratings}=props;
   const img="https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?cs=srgb&dl=pexels-pixabay-326055.jpg&fm=jpg"
   return (
    
-    <section className="justify-content-center align-items-center" style={{"maxWidth": "23rem"}}>
+    <section className="justify-content-center align-items-center" style={{"maxWidth": "23rem", borderRadius:"12px"}}>
         
       <div className="card testimonial-card mt-2 mb-3" style={{"borderRadius":"30px", "border":"2px-solid-black"}}>
         <div className="card card-up">
         <img src={img} class="card-img" alt="Stony Beach" style={{"objectFit":"contain"}}/>
         </div>
         <div className="avatar mx-auto white" style={{"zIndex":1}}>
-          <a href='#'>
+          <Link to={`/profile/mentor/${props._id}`}>
           <img src={profileImg} className="rounded-circle img-fluid"
             alt="woman avatar"/>
-            </a>
+            </Link>
         </div>
         <div className="card-body text-center">
           <h4 className="card-title font-weight-bold">{name}</h4>
@@ -46,9 +74,9 @@ function RecMentors(props) {
                       </div> */}
                     </div>
                     <Typography component="legend" className="text-muted mb-1">Ratings</Typography>
-<Rating name="read-only" value={ratings} readOnly />
+<Rating name="read-only" value={ratings} readOnly/>
         </div>
-        <Button className="ms-auto me-auto mb-2 " variant="outlined">Follow</Button>
+        <Button className="ms-auto me-auto mb-2 " variant="contained" disabled={arr.includes(props._id)} onClick={handleClick}style={{color:"white",backgroundColor:arr.includes(props._id)?"grey":"blue"}}>{arr.includes(props._id)?"Following":"Follow"}</Button>
       </div>
       
     </section>

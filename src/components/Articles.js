@@ -28,7 +28,7 @@ function Articles() {
 <div>
 
 {allArticles.map((element) => {
-    return <div className="d-flex justify-content-center" key={rand++} >
+    return <div className="d-flex justify-content-center " key={rand++} >
        <ArticlesItem {...element}/>
     </div>
 })}

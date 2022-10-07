@@ -2,8 +2,9 @@ import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import Avatar from '@material-ui/core/avatar'
 
-function withinProfile(props) {
-  const {title,image,author,description}=props
+function WithinProfileMentor(props) {
+    
+  const {publisher,publisherImg,title,image,author,description}=props
   return (
         <MDBRow className="justify-content-center bg-transparent">
           <MDBCol >
@@ -16,12 +17,12 @@ function withinProfile(props) {
                       src={image}
                       alt='Generic placeholder image'
                       fluid />
-                  <div className='mt-1'>By, <a href={`/profile/mentor/${author._id}`} style={{"color":"blue"}}>{author.name}</a></div>
+                 
 
                   </div>
                   <div className="flex-grow-1 ms-3">
                  
-                    <a href="#" style={{"text-decoration":"none"}}><div className="muted-text"><h6>{title}</h6></div></a>
+                  <div className="muted-text"><h6>{title}</h6></div>
                     <div>{description}</div>
                   </div>
                 </div>
@@ -32,5 +33,5 @@ function withinProfile(props) {
   )
 }
 
-export default withinProfile
+export default WithinProfileMentor
 //

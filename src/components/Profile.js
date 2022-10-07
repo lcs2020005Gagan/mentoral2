@@ -1,4 +1,5 @@
 import React, { useEffect,useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import noteContext from '../context/notes/noteContext'
 import Rating from '@mui/material/rating'
 import Typography from '@material-ui/core/typography'
@@ -32,14 +33,18 @@ import ProfileArticles from './ProfileArticles';
 
 
 function Profile() {
+  const navigate=useNavigate()
   let rand=0
   const context=useContext(noteContext);
   const {userProfile,getUserProfile}=context;
   const {name,email,password,profileImg,followedMentors,enrolledPrograms,savedForLater}=userProfile
   
   useEffect(() => {
+    if(!localStorage.getItem('token'))
+    navigate("/loginu");
     if(localStorage.getItem('who')==="u")
     getUserProfile();
+    // console.log("profile",enrolledPrograms);
   }, [userProfile])
   
   return (
@@ -179,15 +184,17 @@ function Profile() {
                   <h1 className="text-muted text-align-center ms-auto bg-transparent">Enrolled Programs</h1>
 
      {userProfile.enrolledPrograms.slice(0,2).map((element) => {
-      // console.log(element.author.name);
          return <div className="col-md-6 bg-transparent" key={rand++}>
-            <WithinProfile {...element}/>
+            <WithinProfile publisher={userProfile.name} publisherImg={userProfile.ProfileImg} {...element}/>
          </div>
      })}
-
+ {
+       enrolledPrograms.length===0&&<p>You are not enrolled in any program</p>
+       
+      }
  </div>
-     <button type="button" class="btn ms-auto btn-dark me-auto my-3" style={{"maxWidth":"6rem"}}>Show All</button>
-
+    {enrolledPrograms.length>0&& <button type="button" class="btn ms-auto btn-dark me-auto my-3" style={{"maxWidth":"6rem"}}>Show All</button>
+}
  </div>
 <div className="cont px-3 align-items-center justify-content-center ">
 
@@ -203,7 +210,7 @@ function Profile() {
      })}
 
      {
-       followedMentors.length===0&&<h1 className="text-muted text-align-center">No followed mentors</h1>
+       followedMentors.length===0&&<p>No followed Mentors</p>
        
       }
  </div>

@@ -18,6 +18,9 @@ import Login from './components/Login';
 import LoginM from './components/LoginM';
 import Mentors from './components/Mentors';
 import MentorProfile from './components/MentorProfile';
+import UserArticles from './components/UserArticles';
+import UserPrograms from './components/UserPrograms';
+import UserMentors from './components/UserMentors';
 
 //to do:
 //useState in ProfileMentor notestate.js and profile.js
@@ -34,10 +37,13 @@ function App() {
 <Route exact path="/articles" element= <Articles/> />
 <Route exact path="/programs" element= <Programs/> />
 <Route exact path="/profiles" element= <Profile/> />
+<Route exact path="/profiles/articles" element= <UserArticles/> />
+<Route exact path="/profiles/programs" element= <UserPrograms/> />
+<Route exact path="/profiles/mentors" element= <UserMentors/> />
 <Route exact path="/loginu" element= <Login/> />
 <Route exact path="/loginm" element= <LoginM/> />
-<Route exact path="/profile/mentor/:id" element= <MentorProfile/> />
 <Route exact path="/mentors" element= <Mentors/> />
+<Route exact path="/profile/mentor/:id" element= <MentorProfile/> />
 
 
 

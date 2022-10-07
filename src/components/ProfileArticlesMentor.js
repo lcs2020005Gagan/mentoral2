@@ -14,8 +14,8 @@ import {
 } from 'mdb-react-ui-kit';
 
 
-function ProfileArticles(props) {
-    const {title,author,date,image}=props
+function ProfileArticlesMentor(props) {
+    const {publisher,publisherProfile,title,author,date,image}=props
   return (
     <div className='bg-transparent'>
     
@@ -23,15 +23,16 @@ function ProfileArticles(props) {
             
               <MDBCardBody >
                 <div className="cont d-flex">
-                <a href="#!">
+                <Link to="#">
                     <MDBCardImage
-                      width="60"
+                      width="70"
+                      height="70"
                       src={image}
                       alt="avatar"
                       className="me-auto"
-                       style={{"borderRadius":"12px"}}/>
-                  </a>
-                  <div className="cont ms-1">
+                      style={{"borderRadius":"12px"}}/>
+                  </Link>
+                  <div className="cont ms-3">
                   <MDBTypography tag='h3'>{title}</MDBTypography>
                 <MDBCardText className="small">
                 <MDBIcon fas icon="star text-warning" size="lg" />
@@ -44,15 +45,15 @@ function ProfileArticles(props) {
                 <hr className="my-4" />
                 <div className="d-flex justify-content-start align-items-center">
                 
-                  <a target="_blank" href={`/profile/mentor/${author._id}`}>
+                  <Link to={`/profile/mentor/${author}`}>
                     <MDBCardImage
                       width="35"
-                      src={author.profileImg}
+                      src={publisherProfile}
                       alt="avatar"
                       className="rounded-circle"
                       fluid />
-                  </a>
-                  <span className="mx-2"></span> {author.name}
+                  </Link>
+                  <span className="mx-2"></span> {publisher}
 
                  
                 </div>
@@ -64,5 +65,5 @@ function ProfileArticles(props) {
   )
 }
 
-export default ProfileArticles
+export default ProfileArticlesMentor
 //
